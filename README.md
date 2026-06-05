@@ -59,5 +59,5 @@ PORT=3000
 * 5. ***Ejecutar la aplicación node server***
 
 ```bash
-nodemon 
+nodemon server
 ```

@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 });
 
 //Inicializar la conexión a través de una funcion anónima
-(() => {
+(async () => {
     try {
         const conexion = await pool.getConnection();
         console.log(`Conexión al server y MySQL correcto`);
