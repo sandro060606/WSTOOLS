@@ -32,6 +32,40 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Buscador
+//http://IP:3000/api/herramientas/1
+router.get("/:id", async (req, res) => {
+  try {
+    const query = "SELECT * FROM herramientas WHERE idherramienta = ?";
+
+    //Deserializacion, el primer valor
+    //El metodo query devuelve una MATRIZ
+    //db.query = [[registros....], [info_query]]
+    const [rows] = await db.query(query, [req.params.id]);
+
+    //Es necesario validar si existen datos
+    if(rows.length === 0){
+        return res.status(404).json({
+            succes: false,
+            message: "No Encontrado",
+        });
+    }
+
+    //Devolvemos los datos obtenidos como JSON
+    res.json({
+      succes: true,
+      data: rows,
+    });
+  } catch (err) {
+    //¿Por que 500? Error generado del lado del servidor
+    res.status(500).json({
+      succes: false,
+      message: "Error con la Comunicacíón al servidor",
+      error: err.message,
+    });
+  }
+});
+
 //Registrar
 router.post("/", async (req, res) => {
   try {
