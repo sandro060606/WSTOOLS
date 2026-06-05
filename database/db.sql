@@ -1,5 +1,7 @@
 -- Active: 1780669069425@@127.0.0.1@3306
 CREATE DATABASE constructora;
+
+DROP DATABASE constructora;
 USE constructora;
 
 CREATE TABLE herramientas (
@@ -8,7 +10,7 @@ CREATE TABLE herramientas (
     marca           VARCHAR(50)     NOT NULL,
     descripcion     VARCHAR(100)    NOT NULL,
     fotografia      VARCHAR(200)    NULL,
-    condición       ENUM('Bueno', 'Regular', 'Malo') NOT NULL DEFAULT 'Bueno',
+    condicion       ENUM('Bueno', 'Regular', 'Malo') NOT NULL DEFAULT 'Bueno',
     tipo            ENUM('Manual', 'Electrica') NOT NULL DEFAULT 'Electrica'
 )ENGINE = INNODB;
 
