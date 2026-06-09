@@ -25,3 +25,22 @@ INSERT INTO herramientas (nombre, marca, descripcion) VALUES
 ('Taladro', 'DeWalt', 'Inalambrico 18V');
 
 SELECT * FROM herramientas;
+
+-- PROCEDIMIENTO ALMACENADO = PROGRAMA se ejecuta en el motor de BD
+-- sE PUEDE UTILIZAR COMO UN M'ETODO (INPUT > OUTPUT)
+DELIMITER $$
+    CREATE PROCEDURE spu_herramientas_listar()
+    BEGIN
+        SELECT * FROM herramientas ORDER BY idherramienta DESC;
+    END $$
+
+CALL spu_herramientas_listar();
+
+
+DELIMITER $$
+    CREATE PROCEDURE spu_herramientas_eliminar(IN _idherramienta INT)
+    BEGIN
+        DELETE FROM herramientas WHERE idherramienta = _idherramienta;
+    END $$
+
+CALL spu_herramientas_eliminar();

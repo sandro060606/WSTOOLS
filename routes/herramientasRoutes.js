@@ -10,6 +10,7 @@ const db = require("../config/db");
 
 router.get("/", async (req, res) => {
   try {
+    //const query = "CALL spu_herramientas_listar()";
     const query = "SELECT * FROM herramientas";
 
     //Deserializacion, el primer valor
@@ -47,14 +48,14 @@ router.get("/:id", async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No Encontrado",
+        message: "No se encontro la Herramienta con ese ID",
       });
     }
 
     //Devolvemos los datos obtenidos como JSON
     res.json({
       success: true,
-      data: rows,
+      data: rows[0],
     });
   } catch (err) {
     //¿Por que 500? Error generado del lado del servidor
@@ -211,13 +212,14 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const query = "DELETE FROM herramientas WHERE idherramienta = ?";
+    //const query = "CALL spu_herramientas_eliminar(?)";
     const [result] = await db.query(query, [req.params.id]);
 
     //La consulta se ejecuto sin problemas, pero no afecto a la tabla¿
     if (result.affectedRows === 0) {
       return res.status(404).json({
         success: false,
-        message: "No existe la herramienta que desea eliminar"
+        message: "No existe la herramienta que desea eliminar",
       });
     }
 
