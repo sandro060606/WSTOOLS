@@ -208,12 +208,27 @@ router.put("/:id", async (req, res) => {
 });
 
 //Eliminar | Peligro OJO
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
+    const query = "DELETE FROM herramientas WHERE idherramienta = ?";
+    const [result] = await db.query(query, [req.params.id]);
+
+    //La consulta se ejecuto sin problemas, pero no afecto a la tabla¿
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No existe la herramienta que desea eliminar"
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Eliminado Correctamente",
+    });
   } catch (err) {
     //¿Por que 500? Error generado del lado del servidor
     res.status(500).json({
-      succes: false,
+      success: false,
       message: "Error con la Comunicacíón al servidor",
       error: err.message,
     });
